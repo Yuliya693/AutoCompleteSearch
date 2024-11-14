@@ -1,0 +1,22 @@
+﻿<input type="text" id="searchBox" placeholder="Введите для поиска..." class="mt-4" />
+<div id="tooltip" style="display:none; position: absolute;"></div>
+
+<script>
+    document.getElementById("searchBox").addEventListener("input", function () {
+        const query = this.value;
+        if (query.length > 0) { // Изменили условие с > 2 на > 0
+            fetch(`/api/Search/Search?query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tooltip = document.getElementById("tooltip");
+                    tooltip.innerHTML = data.map(item => `<div> ${item.name}</div>`).join("");
+                    tooltip.style.display = "block";
+                });
+        } else {
+            document.getElementById("tooltip").style.display = "none";
+        }
+    });
+
+
+</script>
+
